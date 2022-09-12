@@ -364,6 +364,7 @@ func TestFilterPath(t *testing.T) {
 			},
 			want: []string{
 				"file1.txt",
+				"test/file2.txt",
 			},
 		},
 		{
@@ -386,6 +387,20 @@ func TestFilterPath(t *testing.T) {
 			},
 			want: []string{
 				"test/file2.txt",
+			},
+		},
+		{
+			description: "works with nested doublestar",
+			pattern:     "foo/bar/*",
+			files: []string{
+				"file1.txt",
+				"foo/file2.txt",
+				"foo/bar/file2.txt",
+				"foo/bar/foo/file2.txt",
+			},
+			want: []string{
+				"foo/bar/file2.txt",
+				"foo/bar/foo/file2.txt",
 			},
 		},
 		{
@@ -436,7 +451,7 @@ func TestFilterIgnorePath(t *testing.T) {
 	}{
 		{
 			description: "excludes all matching files",
-			pattern:     "*.txt",
+			pattern:     "file1.txt",
 			files: []string{
 				"file1.txt",
 				"test/file2.txt",
@@ -465,6 +480,21 @@ func TestFilterIgnorePath(t *testing.T) {
 			},
 			want: []string{
 				"file1.txt",
+			},
+		},
+		{
+			description: "works with nested doublestar",
+			pattern:     "foo/bar/**/*",
+			files: []string{
+				"file1.txt",
+				"foo/file2.txt",
+				"foo/bar/file2.txt",
+				"foo/bar/foo/file2.txt",
+			},
+			want: []string{
+				"file1.txt",
+				"foo/file2.txt",
+				"foo/bar/file2.txt",
 			},
 		},
 		{

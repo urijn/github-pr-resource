@@ -176,15 +176,7 @@ func FilterPath(files []string, pattern string) ([]string, error) {
 }
 
 func matchFilePath(pattern, file string) (match bool, err error) {
-	match, err = filepath.Match(pattern, file)
-	if err != nil {
-		match = glob.Glob(pattern, file)
-		if !match {
-			return
-		}
-
-		return true, nil
-	}
+	match = glob.Glob(pattern, file)
 	return
 }
 

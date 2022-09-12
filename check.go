@@ -2,6 +2,7 @@ package resource
 
 import (
 	"fmt"
+	"github.com/ryanuber/go-glob"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -148,7 +149,7 @@ func ContainsSkipCI(s string) bool {
 func FilterIgnorePath(files []string, pattern string) ([]string, error) {
 	var out []string
 	for _, file := range files {
-		match, err := filepath.Match(pattern, file)
+		match, err := matchFilePath(pattern, file)
 		if err != nil {
 			return nil, err
 		}
@@ -163,7 +164,7 @@ func FilterIgnorePath(files []string, pattern string) ([]string, error) {
 func FilterPath(files []string, pattern string) ([]string, error) {
 	var out []string
 	for _, file := range files {
-		match, err := filepath.Match(pattern, file)
+		match, err := matchFilePath(pattern, file)
 		if err != nil {
 			return nil, err
 		}
@@ -172,6 +173,19 @@ func FilterPath(files []string, pattern string) ([]string, error) {
 		}
 	}
 	return out, nil
+}
+
+func matchFilePath(pattern, file string) (match bool, err error) {
+	match, err = filepath.Match(pattern, file)
+	if err != nil {
+		match = glob.Glob(pattern, file)
+		if !match {
+			return
+		}
+
+		return true, nil
+	}
+	return
 }
 
 // IsInsidePath checks whether the child path is inside the parent path.

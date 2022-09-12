@@ -4,6 +4,7 @@ require (
 	github.com/golang/protobuf v1.4.0 // indirect
 	github.com/google/go-github/v28 v28.1.1
 	github.com/maxbrunsfeld/counterfeiter/v6 v6.2.3
+	github.com/ryanuber/go-glob v1.0.0
 	github.com/shurcooL/githubv4 v0.0.0-20200414012201-bbc966b061dd
 	github.com/shurcooL/graphql v0.0.0-20181231061246-d48a9a75455f // indirect
 	github.com/stretchr/testify v1.3.0

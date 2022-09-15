@@ -379,6 +379,18 @@ func TestFilterPath(t *testing.T) {
 			},
 		},
 		{
+			description: "works with star",
+			pattern:     "*",
+			files: []string{
+				"file1.txt",
+				"test/file2.txt",
+			},
+			want: []string{
+				"file1.txt",
+				"test/file2.txt",
+			},
+		},
+		{
 			description: "works with doublestar",
 			pattern:     "**/*.txt",
 			files: []string{
